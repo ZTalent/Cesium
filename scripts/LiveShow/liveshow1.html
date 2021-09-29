@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	 <script src="../JavaScrip/hls.js"></script>
+</head>
+<body>
+<div>
+		<div id = "LiveURL" hidden>http://cctvalih5ca.v.myalicdn.com/live/cctv1_2/index.m3u8</div>
+      <video id="video" controls loop="false" height="100%" width="100%"></video>
+</div>
+<script>
+   var video = document.getElementById('video');
+   var url = document.getElementById('LiveURL').innerText;
+  if(Hls.isSupported()) {
+	  console.log(url);
+    var hls = new Hls();
+    hls.loadSource(url);
+	 console.log(url);
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED,function() {
+      video.play();
+  });
+ } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+    video.src = url;
+    video.addEventListener("loadedmetadata",function() {
+      video.play();
+    });
+  }
+</script>
+</body>
+</html>
